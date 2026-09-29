@@ -1,5 +1,9 @@
 # Baseline provenance and validation
 
+## Updated portfolio handoff
+
+The v2 handoff assembled from the full original conversation supersedes the earlier incomplete portfolio narrative. Its early probe artifacts are now preserved in `archive/probes/`; the [pre-Git narrative](PRE_GIT_NARRATIVE.md) and [evidence register](EVIDENCE_AND_TESTING.md) explain their scope. The v2 warning about missing source concerns that recovery package: the exact local v0.6.7 package was already recovered and verified below. The four install files remain unchanged.
+
 ## Source selection
 
 The supplied `AnomalyMaterialWishlist_v0.6.7_Handoff.zip` is a recovery archive. Its `current/` directory explicitly contains older recoverable components, not the final v0.6.7 implementation. That directory was not published as current source.
@@ -48,7 +52,7 @@ The following quotations are carried over from the handoff's account of the conv
 
 The handoff supplies the portfolio narrative and v0.6.3/v0.6.4 archives. The local project archive supplies v0.6.5/v0.6.6 packages. These are retained as original snapshots, all added together in the baseline commit after the README setup commit. Dates, historical Git commits, tags, and release claims are not reconstructed.
 
-Earlier motivations and design decisions are handoff-reported context; the repository does not claim a complete pre-v0.6.3 record. The complete original handoff remains outside the repository, including its superseded recovery instructions. Ten unique images are included without duplicate copies or edits.
+Earlier motivations and design decisions are handoff-reported context; the repository does not claim a complete pre-v0.6.3 record. The original handoffs remain outside the repository, including their superseded source-recovery instructions. Ten original portfolio images remain unchanged. The three selected images are also copied into the Pages assets directory for independent site hosting.
 
 ## Remaining provenance gaps
 

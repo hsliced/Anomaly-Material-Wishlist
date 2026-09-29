@@ -1,11 +1,11 @@
 # Development chronology
 
-This chronology summarizes the supplied conversation handoff and preserved artifacts. The package and screenshot archive focuses on v0.6.3 onward; sections 1–6 provide handoff-reported background, not an independently recovered early transcript or complete early version history. Exact dates are not asserted. Quotes and testing reports are attributed to the handoff unless directly visible in an included image.
+This detailed chronology retains the later development notes and baseline provenance. For the superseding full-conversation account, early probe artifacts, approximate v0.3.x–v0.5.x stages, and evidence labels, read [Pre-Git Development Narrative](PRE_GIT_NARRATIVE.md). Exact development dates are not asserted. Quotes and testing reports remain attributed to the handoff unless directly visible in an included image.
 
 ## 1. Problem discovery and early probing
 **Problem/observation:** Sunbreak's anomaly crafting economy requires remembering which investigation levels and monsters provide many similarly named afflicted materials. The user wanted an in-game aid rather than repeatedly leaving the game to consult references.
 
-**Action:** The handoff describes the project beginning as “Smithy Anomaly Finder” with early probe builds. Those probe attachments are not included in this repository. Early work investigated what could be read from REFramework and whether Smithy requirements could be detected directly.
+**Action:** The updated handoff supplies v0.1.0–v0.1.2 probe ZIPs and a v0.1.2 result, now preserved in `archive/probes/`. Early work investigated what could be read from REFramework and whether Smithy requirements could be detected directly. The empty result is limited evidence, as explained in the pre-Git narrative.
 
 **Reasoning:** Automatic Smithy detection would have been the ideal interaction, but the relevant native UI/state was not reliably identified. The project therefore evolved toward a useful manual workflow instead of blocking on uncertain reverse engineering.
 

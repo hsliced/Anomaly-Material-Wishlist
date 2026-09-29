@@ -1,5 +1,12 @@
 # Changelog
 
+## Portfolio history and GitHub Pages update
+
+- Replaced the incomplete case-study narrative with the full-conversation v2 handoff, with explicit evidence and uncertainty labels.
+- Preserved the surviving v0.1.0–v0.1.2 probe ZIPs and result JSON; qualified what the zero-snapshot result can establish.
+- Added a responsive GitHub Pages portfolio and a full reading view of the canonical case study.
+- Kept the verified v0.6.7 install files unchanged. This is a documentation/site update, not a new mod release or reconstructed pre-Git commit.
+
 ## v0.6.7 — current working milestone / initial Git baseline
 
 This initial Git baseline brings together the existing working mod and its documented development story. Publication uses a README setup commit followed by the complete baseline commit. It does not create retrospective release commits or declare the project finished.

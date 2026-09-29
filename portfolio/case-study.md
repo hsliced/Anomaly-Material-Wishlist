@@ -1,150 +1,158 @@
-# Designing a Native-Feeling QoL Mod for Monster Hunter Rise: Sunbreak
+# Anomaly Material Wishlist
 
-> **Project:** Anomaly Material Wishlist
->
-> **Current documented milestone:** v0.6.7
->
-> **Status:** working milestone, still evolving
+## Turning a momentary crafting requirement into an actionable farming plan
 
-The visual record and archived packages focus on v0.6.3 onward. Earlier motivations are summarized from the supplied development handoff, rather than presented as a complete early history. The repository preserves the local v0.6.7 package: a v0.6.6 core and v0.6.7 style module, with their original version markers.
+Monster Hunter Rise: Sunbreak tells players which anomaly materials they are missing while they are at the Smithy. Acting on that information is less direct. Once the player leaves the crafting flow, they still need to know which monsters provide the material, which Anomaly Investigation levels qualify, and how many pieces remain.
 
-## Problem
-Monster Hunter Rise: Sunbreak’s anomaly crafting system asks players for many similarly named afflicted materials. Each material belongs to a family, becomes available across particular investigation-level bands, and comes from particular monsters. The Smithy can tell a player *what* is missing, but that requirement is easy to lose once the player leaves the crafting screen.
+I started this project with a more ambitious question: **could a mod recognize the Smithy's requirement and tell the player exactly what to hunt?**
 
-The project began with a simple product question: **could the game keep the useful part of that crafting context visible while the player goes farming?**
+The first prototypes explored the game's runtime and UI hierarchy through REFramework. The development conversation describes relevant Smithy and equipment UI objects, but no dependable material-requirement snapshot. The surviving v0.1.0–v0.1.2 probe packages confirm that exploration's purpose. One v0.1.2 result records `snapshot_count: 0`; because the probe also saves an empty result on startup or after clearing snapshots, that file alone does not establish what happened during testing.
 
-The strongest current example is `screenshots/02_smithy_passive_hud.png`. The native Smithy shows **Afflicted Dire Fellwing ×2** with none owned. Beside it, the mod keeps the same requirement visible and adds the missing action-oriented context: **Lv 201+; Gold Rathian | Silver Rathalos**.
+Rather than let that technical limitation define the experience, I separated the problem into two parts. Automatic detection could remain an open technical challenge. The more immediate player need—**turning a requirement they already knew into something useful after leaving the Smithy**—could be solved without it.
 
-![The native Smithy requirement and passive farming guidance visible together.](screenshots/02_smithy_passive_hud.png)
+That decision changed the project from a Smithy probe into a persistent farming companion.
 
-*The requirement is manually entered. Matching values demonstrate the workflow, not automatic extraction from the Smithy.*
+![The game's Smithy requirement alongside the passive wishlist](screenshots/02_smithy_passive_hud.png)
 
-## Constraints
-The ideal interaction would read the Smithy’s current requirements automatically. Early REFramework probes investigated that possibility, but reliable requirement extraction and exact Smithy-state detection were not solved. Building the whole experience around an uncertain game hook would have stalled the useful part of the project.
+*The game identifies the missing material; the wishlist carries the requirement forward as a farming plan.*
 
-There were additional constraints:
-- anomaly-material mappings must be accurate—bad data wastes hunts;
-- REFramework configuration UI is useful for editing but visually inappropriate as a permanent gameplay HUD;
-- multiple custom overlays needed consistent visibility behavior rather than independently fighting over the same F8 key;
-- the overlay had to remain readable over wildly different village/Smithy backgrounds;
-- updates should preserve the user’s existing wishlist and settings rather than rename storage for cosmetic consistency.
+## From detection experiment to usable workflow
 
-## Early solution: make the manual path good
-Instead of waiting for automatic Smithy detection, the project pivoted to a manual workflow that could be made fast and dependable.
+The early probe series (v0.1.0–v0.1.2) was deliberately read-only. It searched for runtime objects and fields associated with equipment, crafting, materials, selection state, anomaly systems, Qurious systems, slots, requirements, and costs. The goal was not to automate clicks or alter game state; it was to understand whether the information already visible to the player could be read reliably.
 
-A **Material Counts** editor organizes anomaly families into compact columns. Clicking a material name or `+` adds one; `-` subtracts one. The persistent wishlist then shows only active needs. Each entry carries the quantity, investigation level, and eligible monster sources. A `Done` action clears an individual completed requirement, while `Clear Entire Wishlist` handles resets.
+That exploration produced clues, but not the dependable requirement state needed for the original concept. Instead of continuing to make the entire project contingent on undocumented runtime behavior, I moved the unresolved automation behind the experience rather than in front of it.
 
-This separation became an important interaction decision: **editing is dense and temporary; viewing is compact and persistent.** The player can configure the list while REFramework is open, then close the framework UI and keep only the information needed for the hunt.
+The first useful version of the idea therefore became manual: record what you need, then let the mod remember the farming context.
 
-The corrected workflow screenshot (`screenshots/01_smithy_editor_corrected_x2.png`) demonstrates the full loop: the game asks for two Afflicted Dire Fellwings, the editor records two, and the wishlist translates that need into farming guidance.
+This preserved the original intent while reducing the dependency. The player still begins with the Smithy's requirement, but the mod no longer has to understand the Smithy before it can help.
 
-![Corrected Smithy editor capture: the game requirement, Material Counts, and wishlist all show two Dire Fellwings.](screenshots/01_smithy_editor_corrected_x2.png)
+## Separating setup from play
 
-*The REFramework panel still shows core version 0.6.6, which is retained in the v0.6.7 package. An earlier screenshot showed a manually entered quantity of one; the corrected image above is the portfolio workflow reference.*
+A second problem appeared once the material tracker became usable: the interface needed to support two very different moments.
 
-## Data architecture: separate facts from behavior
-Material mappings were moved into `SmithyAnomalyData.json` rather than remaining embedded in Lua. The recovered database identifies itself as revision `TU5_INFOGRAPHIC_002` and supports both simple monster-source strings and source objects with their own level ranges.
+While setting up a wishlist, the player needs controls—material quantities, clearing actions, positioning, and configuration. During normal play, those controls are noise. What matters is a compact reminder of what to hunt.
 
-That separation matters because data errors have real gameplay cost. During development, the Dire Wing family needed a correction: **Gold Rathian and Silver Rathalos are the sources; Bazelgeuse must not be included.** Treating the mapping as maintained data, rather than incidental UI code, made those corrections safer and more reviewable.
+A pattern I had already tested in another REFramework mod, SubCampFinder, provided a useful starting point. With REFramework open, the mod could behave like an editor. Close REFramework and the same state could become a passive overlay. F8 provided a quick visibility control.
 
-The Lua layer can therefore focus on loading/validating the database, maintaining counts, and rendering the experience.
+That distinction became a principle for the project: **editing is an active task; remembering what to hunt should not be.**
 
-## Editor and persistence
-The project stores user state separately from distributable data:
-- `smithy_anomaly_wishlist.json` keeps material quantities;
-- `smithy_anomaly_settings.json` keeps UI preferences/positions/sizes;
-- versioned probe JSON captures diagnostics during development.
+The passive HUD was reduced to three questions:
 
-Those filenames intentionally remain stable even after the public product name changed from “Smithy Anomaly Finder” to “Anomaly Material Wishlist.” Renaming internal persistence for branding would create migration risk without improving the player experience.
+- **What?** The material and remaining quantity.
+- **When?** The relevant investigation level.
+- **Where?** The monsters that can provide it.
 
-The editor itself evolved through in-game use. Instructions that originally occupied body space were consolidated into the window title, the default height was adjusted after a bottom action became clipped, and two overlapping position-reset controls were reduced to one resolution-aware reset. These are small changes, but they illustrate the project’s recurring process: **test in the real game context, notice friction, remove it.**
+For example:
 
-## Passive HUD and lifecycle behavior
-A persistent farming list only helps if it appears at the right time and stays out of the way otherwise.
+```text
+Afflicted Dire Fellwing x2
+Lv 201+
+Gold Rathian | Silver Rathalos
+```
 
-The passive HUD is hidden while REFramework’s editor UI is open and rendered during normal play. F8 toggles visibility. Because the user has multiple HS overlays, the project adopted a shared `_G.HSHotkeys` generation counter instead of letting every mod independently edge-detect F8.
+## Making a dense material system manageable
 
-Optional save-load behavior uses the presence of the master player (`snow.player.PlayerManager` / `findMasterPlayer`) as a pragmatic lifecycle signal. The HUD can remain hidden before a character loads and appear once the save is active. This is deliberately narrower than Smithy detection: it solves a real lifecycle problem without pretending the code knows which crafting screen is open.
+As the anomaly catalog grew, simply exposing more controls made the editor harder to use. Iterations through the v0.4.x period focused on structure: explicit columns, aligned quantity controls, clearer grouping, persisted positioning, and less instructional clutter.
 
-## Native-UI visual iteration
-Functionality was only half the goal. A permanent overlay that looked like a generic debug panel would compete with Rise rather than belong beside it.
+The Material Counts editor eventually settled on compact `- count +` controls, with the material label itself also acting as a quick increment action. The wishlist editor became independently movable and resizable. Position and size persisted so the interface did not need to be rebuilt every session.
 
-Two styles were kept intentionally:
-- **Classic:** a polished cyan/black presentation that remained a readable fallback/alternative.
-- **Rise:** a brown/gold Direct2D treatment informed by the game’s Village Progress, Outpost Progress, Wishlist, Smithy, and Qurious Crafting UI.
+The conversation places the development of a persistent wishlist around the v0.5.x period. Players could mark an individual requirement **Done** or clear the entire wishlist, while settings and wishlist data remained stored across sessions. In the current source, the Material Counts editor and wishlist operate on the same manually maintained requirement map; they do not track inventory ownership separately.
 
-### Architecture enables visual iteration
-By v0.6.3, rendering had grown enough to justify splitting `SmithyAnomalyStyle.lua` from the core `SmithyAnomaly.lua`. That made typography, geometry, palette, and positioning easier to change without mixing them into persistence and game-state behavior.
+This also affected startup behavior. REFramework can initialize before the player's character state is ready, so the mod uses master-player availability as a practical signal that a save is loaded. The passive wishlist can stay out of the way during startup and appear once the player's game state exists.
 
-The split also produced an instructive bug: v0.6.3 attempted arithmetic on the `fs` table while calculating Rise HUD height. v0.6.4 corrected those calculations to use `fs.scale`. The user tested the fix successfully. This is a useful portfolio debugging episode because the failure was not hidden—it directly informed a cleaner understanding of the style context structure.
+## A recommendation is only useful if it is right
 
-### Placement follows the native hierarchy
-The first Rise positioning pass sat too high and overlapped Village/Outpost Progress. v0.6.5 moved the default down. In-game testing then showed that vertical clearance was good but horizontal alignment still felt off. v0.6.6 shifted the default left so the rectangular body aligned more naturally with the native Progress panels.
+The mod's value depends on more than remembering a material name. It needs to map that material to the correct anomaly tier, investigation range, and monster sources.
 
-| Earlier overlap | Intermediate placement |
-| --- | --- |
-| ![Earlier HUD overlapping Outpost Progress.](screenshots/history/earlier_rise_hud.png) | ![Intermediate HUD clears the Progress panels but sits farther right.](screenshots/history/earlier_village_positioning.png) |
+That information became important enough to separate from the UI implementation. The material mapping moved into `SmithyAnomalyData.json`, allowing farming data to be corrected without rewriting rendering logic.
 
-*These originals demonstrate the placement problem and the subsequent clearance. Their exact capture versions are not established by the images alone; the version sequence comes from the development handoff.*
+Real use made the cost of bad data obvious. An incorrect source can send the player into an unnecessary hunt. One important correction involved the Afflicted Dire Wing / Dire Fellwing family: the correct sources are **Gold Rathian and Silver Rathalos**. Bazelgeuse does not belong in that family.
 
-The same release cleaned up product naming and editor controls. The user’s response—“Not bad. Looks like it preserves the text size setting too.”—also confirmed that visual iteration had not discarded the saved 1.2× HUD scale.
+That experience changed how I treated the database. It was no longer supporting copy for the interface; it was part of the product's behavior and needed the same validation discipline as code.
 
-### v0.6.7: typography and environmental contrast
-A later village screenshot exposed a subtler issue: the brown wedge could disappear against the brown side of a boat. The native Rise panels use dark translucent perimeter treatment to keep their silhouette readable across scenery.
+## Designing for the game instead of around it
 
-v0.6.7 therefore focused on visual contrast rather than adding features. The Rise heading moved from all caps to **Anomaly Material Wishlist**, title/material typography became lighter, dark text-outline treatment was explored, and a dark translucent outer silhouette was added behind the panel and wedge while preserving the brown/gold inner border.
+The project developed two intentional visual directions.
 
-The current village screenshot (`screenshots/03_village_passive_hud_v067.png`) shows the result beneath the native Progress panels. It also reveals the next refinement: the user noted that the outer transparent border still is not as thick as the game’s own treatment. That limitation is documented rather than edited out of the story.
+**Classic** is a polished mod-overlay treatment with cyan accents, a dark translucent body, strong dividers, and compact hierarchy.
 
-![Before the contrast pass: the brown wedge blends with the boat behind it.](screenshots/history/pre067_scene_2.png)
+**Rise** asks a different question: could the wishlist feel comfortable beside Monster Hunter Rise's own HUD?
 
-*The boat-background example before the v0.6.7 contrast pass. It motivated stronger separation between the wedge and scenery.*
+I used the game's Village Progress, Outpost Progress, Wishlist, Smithy/Qurious Crafting panels, and material notifications as visual references. The goal was not to clone a screen. I looked for recurring visual language: warm translucent browns, gold accents, dark silhouettes, angular geometry, compact typography, and layered transparency.
 
-![v0.6.7 village HUD below the native Progress panels, with lighter typography and a dark perimeter.](screenshots/03_village_passive_hud_v067.png)
+![Passive wishlist aligned below native progress panels](screenshots/03_village_passive_hud_v067.png)
 
-*Current village result. These are different scenes, not a controlled same-camera comparison; the visual direction is evident, while the remaining border mismatch is still visible.*
+*The passive HUD is positioned beneath the game's existing progress UI, using it as a visual anchor rather than claiming a separate part of the screen.*
 
-## Current result
-v0.6.7 is the point where the project became coherent enough to establish a Git baseline and portfolio story. It combines:
-- a concrete gameplay problem;
-- a maintained external data model;
-- a fast manual fallback where automation is not yet reliable;
-- persistent state and lifecycle behavior;
-- a separation between editing and passive use;
-- an architecture that isolates visual styling;
-- repeated visual comparison against the host game rather than styling in isolation.
+Position became part of the design. At 1440p, moving the default HUD lower prevented it from competing with the native Progress panels. Later iterations shifted it left to align more closely with those panels. Text scaling was added as a persistent preference so native resemblance did not have to come at the expense of readability.
 
-The best hero image is the Smithy passive view because the problem and solution coexist in one frame: the native UI identifies the missing material, while the mod supplies the information needed to act on it.
+## Separating behavior from presentation
 
-The initial baseline preserves all four install files byte for byte from the local v0.6.7 ZIP, independently matched against the neighboring working files. Static checks establish package integrity and data structure; the historical in-game testing and screenshots provide the runtime evidence. No new in-game run or performance benchmark was performed while preparing this commit. See [provenance and validation](../docs/BASELINE_PROVENANCE.md).
+As the visual system became more sophisticated, presentation changes were increasingly capable of destabilizing unrelated behavior. In v0.6.3 I split the project into two modules:
 
-## What the project demonstrates
-### Product thinking
-The project did not treat “automatic detection” as a prerequisite for usefulness. When the ideal hook was uncertain, scope moved toward a manual interaction that still solved the core job.
+- `SmithyAnomaly.lua` owns settings, wishlist state, persistence, save/load behavior, F8 handling, and editors.
+- `SmithyAnomalyStyle.lua` owns Direct2D fonts, colors, geometry, positioning, and the Classic/Rise renderers.
 
-### Interaction design
-Dense editing and passive viewing were separated. Visibility, save lifecycle, per-item completion, and persistent settings were refined around actual use rather than a static mockup.
+The refactor immediately exposed a regression. The text-scaling code changed `fs` from a numeric value into a structure, while some height calculations still treated it as a number. The result was a runtime error: `attempt to perform arithmetic on a table value (local 'fs')`.
 
-### Visual judgment
-The Rise theme evolved by comparing the overlay with native UI in multiple environments. Placement, hierarchy, font weight, casing, translucency, wedge silhouette, and contrast were all changed in response to in-game evidence.
+The v0.6.4 fix moved those calculations to `fs.scale` and used the appropriate font members separately. The architectural direction remained; the implementation was corrected and tested in game.
 
-### Technical implementation
-The work spans REFramework Lua, external JSON data, Direct2D rendering, persistence, shared hotkey coordination, Vortex deployment, and defensive fallbacks/diagnostics.
+The reported fix retained the module split while correcting how the renderer used its scaling context.
 
-### Iteration and debugging
-Packaging failures, a Direct2D arithmetic crash, incorrect visual placement, clipped editor content, and screenshot-story mismatches were surfaced and corrected rather than omitted from the process.
+## Refining the HUD in context
 
-## Authorship and AI collaboration
-The repository owner defined the problem, made product and visual decisions, supplied/validated material mappings, repeatedly tested builds in Monster Hunter Rise, captured screenshots, identified regressions, and decided which tradeoffs were acceptable.
+Later iterations were driven less by feature count and more by what the overlay looked like in the actual game.
 
-AI assistance was used as a collaborative implementation and documentation tool: drafting/refactoring Lua, reasoning about REFramework behavior, suggesting debugging steps, helping structure Vortex packages, comparing screenshots, and maintaining versioned iteration plans. The work should not be presented as autonomous AI authorship; the direction and acceptance criteria came from the user’s repeated in-game evaluation.
+v0.6.5 adjusted the default vertical placement. v0.6.6 simplified configuration language, removed redundant instructional content, aligned the HUD more closely with the native Progress panels, and confirmed that text-scale settings persisted across updates.
 
-## Next steps
-The current milestone is intentionally not described as finished.
+The next issue only became obvious outside the Smithy. The Rise panel is intentionally translucent, and against some dark brown scenery its triangular left wedge visually disappeared into the environment.
 
-1. **Automatic Smithy requirement detection.** Continue investigating game state. If reliable, preview detected requirements and require an explicit **Apply to Wishlist** action rather than silently replacing persistent state.
-2. **Native-style border refinement.** Increase/refine the outer translucent silhouette to better match Rise’s Progress panels across bright and dark scenery.
-3. **Header treatment.** Explore a stronger, more continuous Progress-style dark outline around the Rise title while keeping body text quieter.
-4. **Continue validating material data.** Treat source/level changes as factual data updates requiring verification, and recover definitive external data attribution.
+The v0.6.7 pass added a darker outer silhouette, title-case typography, lighter-weight Rise text, and subtle text outlining while preserving the existing brown/gold structure.
 
-The [screenshot index](screenshot-index.md) preserves the supporting images and their limits. The [development chronology](../docs/DEVELOPMENT_CHRONOLOGY.md) records the available pre-Git context without fabricating historical commits.
+The result is not a pixel-perfect recreation of the native UI—and that is not the goal. The current dark buffer is still thinner than the game's own Progress panels. But the hierarchy and silhouette now hold up across more of the environment without turning the wishlist into an opaque floating box.
+
+## The current experience
+
+The clearest expression of the workflow is the Smithy itself.
+
+![Editor and game requirement showing the same x2 need](screenshots/01_smithy_editor_corrected_x2.png)
+
+The game shows **Afflicted Dire Fellwing ×2** as a requirement. The mod preserves that requirement and adds the information needed to act on it: **Lv 201+**, **Gold Rathian**, or **Silver Rathalos**.
+
+The player enters the quantity manually. The matching ×2 values show the intended workflow, not automatic synchronization with the Smithy or inventory. v0.6.7 is a current working milestone, not a finished final release. Its verified local package retains the v0.6.6 core and uses the v0.6.7 style module.
+
+## What I would do next
+
+The original Smithy-detection idea is still valuable. If reliable requirement detection becomes possible, I would not have it silently modify the player's wishlist. The next interaction I want to explore is:
+
+```text
+Smithy requirement detected
+        ↓
+Preview detected materials
+        ↓
+Apply to Wishlist
+```
+
+That preserves user control while removing the remaining manual handoff.
+
+Other next steps include refining the Rise HUD's dark outer buffer and title treatment, continuing material-database validation, and testing the interface across more resolutions and game contexts.
+
+## My role and AI collaboration
+
+I defined the problem and product direction, made the scope and interaction decisions, tested builds inside Monster Hunter Rise, supplied runtime evidence and screenshots, identified incorrect farming data, evaluated visual alignment against the native UI, and decided which iterations to keep or revise.
+
+I used AI as a development collaborator for Lua implementation, REFramework exploration, debugging, structured-data organization, packaging, and documentation. The AI could propose or generate implementation, but it could not validate the experience inside the game. The working loop was therefore iterative: I identified a need or problem, we developed an implementation, I installed and tested it in the real game, and the next iteration responded to that evidence.
+
+This case study reflects that collaboration without treating generated code as independent product validation.
+
+## Evidence and uncertainty
+
+This account adapts the updated portfolio handoff assembled from the original development conversation. It supersedes the earlier incomplete narrative. Approximate v0.3.x–v0.5.x stages are conversation-synthesized, not a complete surviving source chronology or a reconstructed commit history.
+
+- **Artifact-confirmed:** surviving probe ZIPs and result JSON; verified local milestone source; external database and persistence conventions.
+- **Test-report confirmed:** historical in-game observations preserved in the handoff, including the renderer fix and retained text-scale preference. No new in-game test was performed for this portfolio update.
+- **Screenshot-visible:** the corrected ×2 editor workflow, passive Smithy guidance, village placement, and native-UI iterations. Screenshots alone do not prove broad compatibility or performance.
+- **Conversation-synthesized:** the early product pivot, approximate editor evolution, and reasoning reconstructed in the updated handoff.
+- **Proposed:** automatic Smithy detection, preview/apply automation, additional visual refinement, and broader testing.
+
+The definitive external database attribution and redistribution terms remain unresolved; no project license has been invented. The [pre-Git narrative](../docs/PRE_GIT_NARRATIVE.md), [evidence register](../docs/EVIDENCE_AND_TESTING.md), [source provenance](../docs/BASELINE_PROVENANCE.md), and [original screenshot index](screenshot-index.md) preserve those boundaries. All historical artifacts are added through ordinary present-day commits.

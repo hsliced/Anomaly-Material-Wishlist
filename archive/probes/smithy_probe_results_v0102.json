@@ -1,0 +1,9 @@
+{
+  "mod": "Smithy Anomaly Probe",
+  "output_file": "smithy_probe_results_v0102.json",
+  "probe_version": "0.1.2",
+  "purpose": "Discover Smithy selection/upgrade/material runtime state",
+  "snapshot_count": 0,
+  "snapshots": null,
+  "version": "0.1.2"
+}
