@@ -1,0 +1,426 @@
+{
+  "revision": "TU5_INFOGRAPHIC_002",
+  "families": [
+    {
+      "title": "PELT",
+      "tiers": [
+        {
+          "short": "Pelt",
+          "name": "Afflicted Pelt",
+          "levels": "Lv 1-30",
+          "sources": ["Great Izuchi", "Great Wroggi", "Kulu-Ya-Ku", "Great Baggi"]
+        },
+        {
+          "short": "Hide+",
+          "name": "Afflicted Hide+",
+          "levels": "Lv 31-100",
+          "sources": ["Great Izuchi", "Great Wroggi", "Kulu-Ya-Ku", "Great Baggi"]
+        },
+        {
+          "short": "Thickhide",
+          "name": "Afflicted Thickhide",
+          "levels": "Lv 101+",
+          "sources": ["Great Izuchi", "Great Wroggi", "Kulu-Ya-Ku", "Great Baggi"]
+        }
+      ]
+    },
+    {
+      "title": "BONE",
+      "tiers": [
+        {
+          "short": "Bone",
+          "name": "Afflicted Bone",
+          "levels": "Lv 1-30",
+          "sources": ["Arzuros", "Lagombi", "Volvidon"]
+        },
+        {
+          "short": "Hardbone",
+          "name": "Afflicted Hardbone",
+          "levels": "Lv 31-100",
+          "sources": ["Arzuros", "Lagombi", "Volvidon"]
+        },
+        {
+          "short": "Slogbone",
+          "name": "Afflicted Slogbone",
+          "levels": "Lv 101+",
+          "sources": ["Arzuros", "Lagombi", "Volvidon"]
+        }
+      ]
+    },
+    {
+      "title": "MONSTER BONE",
+      "tiers": [
+        {
+          "short": "Monster Bone",
+          "name": "Afflicted Monster Bone",
+          "levels": "Lv 1-30",
+          "sources": ["Aknosom", "Royal Ludroth", "Basarios", "Barroth"]
+        },
+        {
+          "short": "Monster Hardbone",
+          "name": "Afflicted Monster Hardbone",
+          "levels": "Lv 31-100",
+          "sources": ["Aknosom", "Royal Ludroth", "Basarios", "Barroth"]
+        },
+        {
+          "short": "Monster Slogbone",
+          "name": "Afflicted Monster Slogbone",
+          "levels": "Lv 101+",
+          "sources": ["Aknosom", "Royal Ludroth", "Basarios", "Barroth"]
+        }
+      ]
+    },
+    {
+      "title": "BLOOD",
+      "tiers": [
+        {
+          "short": "Blood",
+          "name": "Afflicted Blood",
+          "levels": "Lv 1-30",
+          "sources": ["Tetranadon", "Bishaten", "Khezu", "Daimyo Hermitaur"]
+        },
+        {
+          "short": "Dragon Blood",
+          "name": "Afflicted Dragon Blood",
+          "levels": "Lv 31-100",
+          "sources": ["Tetranadon", "Bishaten", "Khezu", "Daimyo Hermitaur"]
+        },
+        {
+          "short": "Pure Blood",
+          "name": "Afflicted Pure Blood",
+          "levels": "Lv 101+",
+          "sources": ["Tetranadon", "Bishaten", "Khezu", "Daimyo Hermitaur"]
+        }
+      ]
+    },
+    {
+      "title": "SHELL",
+      "tiers": [
+        {
+          "short": "Shell",
+          "name": "Afflicted Shell",
+          "levels": "Lv 1-30",
+          "sources": ["Blood Orange Bishaten", "Jyuratodus", "Shogun Ceanataur", "Somnacanth"]
+        },
+        {
+          "short": "Carapace",
+          "name": "Afflicted Carapace",
+          "levels": "Lv 31-100",
+          "sources": ["Blood Orange Bishaten", "Jyuratodus", "Shogun Ceanataur", "Somnacanth"]
+        },
+        {
+          "short": "Cortex",
+          "name": "Afflicted Cortex",
+          "levels": "Lv 101+",
+          "sources": ["Blood Orange Bishaten", "Jyuratodus", "Shogun Ceanataur", "Somnacanth"]
+        }
+      ]
+    },
+    {
+      "title": "SCALE",
+      "tiers": [
+        {
+          "short": "Scale",
+          "name": "Afflicted Scale",
+          "levels": "Lv 1-30",
+          "sources": ["Anjanath", "Pukei-Pukei", "Rathian", "Tobi-Kadachi"]
+        },
+        {
+          "short": "Scale+",
+          "name": "Afflicted Scale+",
+          "levels": "Lv 31-100",
+          "sources": ["Anjanath", "Pukei-Pukei", "Rathian", "Tobi-Kadachi"]
+        },
+        {
+          "short": "Shard",
+          "name": "Afflicted Shard",
+          "levels": "Lv 101+",
+          "sources": ["Anjanath", "Pukei-Pukei", "Rathian", "Tobi-Kadachi"]
+        }
+      ]
+    },
+    {
+      "title": "CLAW",
+      "tiers": [
+        {
+          "short": "Claw",
+          "name": "Afflicted Claw",
+          "levels": "Lv 1-30",
+          "sources": ["Almudron", "Aurora Somnacanth", "Goss Harag", "Rakna-Kadaki"]
+        },
+        {
+          "short": "Claw+",
+          "name": "Afflicted Claw+",
+          "levels": "Lv 31-100",
+          "sources": ["Almudron", "Aurora Somnacanth", "Goss Harag", "Rakna-Kadaki"]
+        },
+        {
+          "short": "Hardclaw",
+          "name": "Afflicted Hardclaw",
+          "levels": "Lv 101+",
+          "sources": ["Almudron", "Aurora Somnacanth", "Goss Harag", "Rakna-Kadaki"]
+        }
+      ]
+    },
+    {
+      "title": "FANG",
+      "tiers": [
+        {
+          "short": "Fang",
+          "name": "Afflicted Fang",
+          "levels": "Lv 1-30",
+          "sources": ["Barioth", "Garangolm", "Magnamalo", "Nargacuga"]
+        },
+        {
+          "short": "Fang+",
+          "name": "Afflicted Fang+",
+          "levels": "Lv 31-100",
+          "sources": ["Barioth", "Garangolm", "Magnamalo", "Nargacuga"]
+        },
+        {
+          "short": "Hardfang",
+          "name": "Afflicted Hardfang",
+          "levels": "Lv 101+",
+          "sources": ["Barioth", "Garangolm", "Magnamalo", "Nargacuga"]
+        }
+      ]
+    },
+    {
+      "title": "DIRE BONE",
+      "tiers": [
+        {
+          "short": "Dire Bone",
+          "name": "Afflicted Dire Bone",
+          "levels": "Lv 51-100",
+          "sources": ["Lunagaron", "Magma Almudron", "Tigrex"]
+        },
+        {
+          "short": "Dire Hardbone",
+          "name": "Afflicted Dire Hardbone",
+          "levels": "Lv 101-160",
+          "sources": ["Lunagaron", "Magma Almudron", "Tigrex"]
+        },
+        {
+          "short": "Dire Slogbone",
+          "name": "Afflicted Dire Slogbone",
+          "levels": "Lv 161+",
+          "sources": ["Lunagaron", "Magma Almudron", "Tigrex"]
+        }
+      ]
+    },
+    {
+      "title": "DIRE SCALE",
+      "tiers": [
+        {
+          "short": "Dire Scale",
+          "name": "Afflicted Dire Scale",
+          "levels": "Lv 51-100",
+          "sources": ["Astalos", "Mizutsune", "Rathalos"]
+        },
+        {
+          "short": "Dire Scale+",
+          "name": "Afflicted Dire Scale+",
+          "levels": "Lv 101-160",
+          "sources": ["Astalos", "Mizutsune", "Rathalos"]
+        },
+        {
+          "short": "Dire Shard",
+          "name": "Afflicted Dire Shard",
+          "levels": "Lv 161+",
+          "sources": ["Astalos", "Mizutsune", "Rathalos"]
+        }
+      ]
+    },
+    {
+      "title": "DIRE HORN",
+      "tiers": [
+        {
+          "short": "Dire Horn",
+          "name": "Afflicted Dire Horn",
+          "levels": "Lv 51-100",
+          "sources": ["Diablos", "Seregios", "Zinogre"]
+        },
+        {
+          "short": "Dire Horn+",
+          "name": "Afflicted Dire Horn+",
+          "levels": "Lv 101-160",
+          "sources": ["Diablos", "Seregios", "Zinogre"]
+        },
+        {
+          "short": "Dire Hardhorn",
+          "name": "Afflicted Dire Hardhorn",
+          "levels": "Lv 161+",
+          "sources": ["Diablos", "Seregios", "Zinogre"]
+        }
+      ]
+    },
+    {
+      "title": "DIRE SHELL",
+      "tiers": [
+        {
+          "short": "Dire Shell",
+          "name": "Afflicted Dire Shell",
+          "levels": "Lv 71-110",
+          "sources": ["Espinas", "Gore Magala", "Bazelgeuse"]
+        },
+        {
+          "short": "Dire Carapace",
+          "name": "Afflicted Dire Carapace",
+          "levels": "Lv 111-180",
+          "sources": ["Espinas", "Gore Magala", "Bazelgeuse"]
+        },
+        {
+          "short": "Dire Cortex",
+          "name": "Afflicted Dire Cortex",
+          "levels": "Lv 181+",
+          "sources": ["Espinas", "Gore Magala", "Bazelgeuse"]
+        }
+      ]
+    },
+    {
+      "title": "DIRE CLAW",
+      "tiers": [
+        {
+          "short": "Dire Claw",
+          "name": "Afflicted Dire Claw",
+          "levels": "Lv 71-110",
+          "sources": ["Rajang", "Pyre Rakna-Kadaki"]
+        },
+        {
+          "short": "Dire Claw+",
+          "name": "Afflicted Dire Claw+",
+          "levels": "Lv 111-180",
+          "sources": ["Rajang", "Pyre Rakna-Kadaki"]
+        },
+        {
+          "short": "Dire Hardclaw",
+          "name": "Afflicted Dire Hardclaw",
+          "levels": "Lv 181+",
+          "sources": ["Rajang", "Pyre Rakna-Kadaki"]
+        }
+      ]
+    },
+    {
+      "title": "DIRE WING",
+      "tiers": [
+        {
+          "short": "Dire Wing",
+          "name": "Afflicted Dire Wing",
+          "levels": "Lv 91-140",
+          "sources": ["Gold Rathian", "Silver Rathalos"]
+        },
+        {
+          "short": "Dire Wing+",
+          "name": "Afflicted Dire Wing+",
+          "levels": "Lv 141-200",
+          "sources": ["Gold Rathian", "Silver Rathalos"]
+        },
+        {
+          "short": "Dire Fellwing",
+          "name": "Afflicted Dire Fellwing",
+          "levels": "Lv 201+",
+          "sources": ["Gold Rathian", "Silver Rathalos"]
+        }
+      ]
+    },
+    {
+      "title": "DIRE BLOOD",
+      "tiers": [
+        {
+          "short": "Dire Blood",
+          "name": "Afflicted Dire Blood",
+          "levels": "Lv 91-140",
+          "sources": [
+            "Flaming Espinas",
+            "Seething Bazelgeuse",
+            {
+              "name": "Chaotic Gore Magala",
+              "levels": "Lv 111-140"
+            }
+          ]
+        },
+        {
+          "short": "Dire Dragon Blood",
+          "name": "Afflicted Dire Dragon Blood",
+          "levels": "Lv 141-200",
+          "sources": ["Flaming Espinas", "Seething Bazelgeuse", "Chaotic Gore Magala"]
+        },
+        {
+          "short": "Dire Darkblood",
+          "name": "Afflicted Dire Darkblood",
+          "levels": "Lv 201+",
+          "sources": ["Flaming Espinas", "Seething Bazelgeuse", "Chaotic Gore Magala"]
+        }
+      ]
+    },
+    {
+      "title": "DIRE FANG",
+      "tiers": [
+        {
+          "short": "Dire Fang",
+          "name": "Afflicted Dire Fang",
+          "levels": "Lv 91-140",
+          "sources": ["Furious Rajang", "Scorned Magnamalo"]
+        },
+        {
+          "short": "Dire Fang+",
+          "name": "Afflicted Dire Fang+",
+          "levels": "Lv 141-200",
+          "sources": ["Furious Rajang", "Scorned Magnamalo"]
+        },
+        {
+          "short": "Dire Hardfang",
+          "name": "Afflicted Dire Hardfang",
+          "levels": "Lv 201+",
+          "sources": ["Furious Rajang", "Scorned Magnamalo"]
+        }
+      ]
+    },
+    {
+      "title": "RISEN DRAGONBONE",
+      "tiers": [
+        {
+          "short": "Risen Dragonbone",
+          "name": "Risen Dragonbone",
+          "levels": "Lv 111-160",
+          "sources": ["Risen Chameleos", "Risen Kushala Daora", "Risen Teostra"]
+        },
+        {
+          "short": "Risen Dragonbone+",
+          "name": "Risen Dragonbone+",
+          "levels": "Lv 161-220",
+          "sources": ["Risen Chameleos", "Risen Kushala Daora", "Risen Teostra"]
+        },
+        {
+          "short": "Risen Slogbone",
+          "name": "Risen Slogbone",
+          "levels": "Lv 221+",
+          "sources": ["Risen Chameleos", "Risen Kushala Daora", "Risen Teostra"]
+        }
+      ]
+    },
+    {
+      "title": "RISEN DRAGON BLOOD",
+      "tiers": [
+        {
+          "short": "Risen Dragon Blood",
+          "name": "Risen Dragon Blood",
+          "levels": "Lv 131-200",
+          "sources": ["Risen Crimson Glow Valstrax", "Risen Shagaru Magala"]
+        },
+        {
+          "short": "Risen Pureblood",
+          "name": "Risen Dragon Pureblood",
+          "levels": "Lv 201-240",
+          "sources": ["Risen Crimson Glow Valstrax", "Risen Shagaru Magala"]
+        },
+        {
+          "short": "Risen Thickblood",
+          "name": "Risen Dragon Thickblood",
+          "levels": "Lv 241+",
+          "sources": ["Risen Crimson Glow Valstrax", "Risen Shagaru Magala"]
+        }
+      ]
+    }
+  ]
+}

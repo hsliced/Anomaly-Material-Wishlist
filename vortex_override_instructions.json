@@ -1,0 +1,21 @@
+[
+  {
+    "type": "copy",
+    "source": "reframework/autorun/SmithyAnomaly.lua",
+    "destination": "reframework/autorun/SmithyAnomaly.lua"
+  },
+  {
+    "type": "copy",
+    "source": "reframework/autorun/SmithyAnomalyStyle.lua",
+    "destination": "reframework/autorun/SmithyAnomalyStyle.lua"
+  },
+  {
+    "type": "copy",
+    "source": "reframework/data/SmithyAnomalyData.json",
+    "destination": "reframework/data/SmithyAnomalyData.json"
+  },
+  {
+    "type": "setmodtype",
+    "value": "dinput"
+  }
+]

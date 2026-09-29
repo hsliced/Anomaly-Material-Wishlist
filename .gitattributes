@@ -1,0 +1,8 @@
+# Preserve the original tested install-file bytes, including line endings.
+reframework/** -text whitespace=cr-at-eol
+vortex_override_instructions.json -text whitespace=cr-at-eol
+*.png binary
+*.zip binary
+*.md text eol=lf
+.gitignore text eol=lf
+.gitattributes text eol=lf

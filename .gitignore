@@ -1,0 +1,10 @@
+# Personal runtime state; retain the legacy filenames in the implementation.
+smithy_anomaly_wishlist.json
+smithy_anomaly_settings.json
+smithy_anomaly_probe_*.json
+
+# Local packaging and editor output.
+/dist/
+*.log
+.DS_Store
+Thumbs.db
